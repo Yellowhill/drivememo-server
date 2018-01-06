@@ -1,0 +1,55 @@
+extends email-layout
+
+block content
+  h2 Ajomuistio: #{drivememoInfo.driver.email}
+  table#drivememo-table
+    tr#drive-start
+      td Ajovuoro alkoi
+      td #{driveStartDate}
+    tr#drive-end
+      td Ajovuoro päättyi
+      td #{driveEndDate}
+    tr#roadometer-start-value
+      td Matkamittarin lukema ajovuoron alussa
+      td #{drivememoInfo.roadometerStartValue}
+    tr#roadometer-end-value
+      td Matkamittarin lukema ajovuoron lopussa
+      td #{drivememoInfo.roadometerEndValue}
+    tr#work-related-driving
+      td Ammattiajoa
+      td #{drivememoInfo.workRelatedDriving}
+    tr#work-related-driving-nopay
+      td Tuloa tuottamaton ammattiajo
+      td #{drivememoInfo.workRelatedDrivingNoPay}
+    tr#total-mileage
+      td Kilometrejä yhteensä ajovuorossa
+      td #{drivememoInfo.totalMileage}
+    table#drive-ass-table
+      tr#drive-ass-table-header-row
+        td.card-drive-header Korttiajot
+        td.cash-drive-header  Käteisajot
+        td.invoice-drive-header  Laskutettavat
+      tr.drive-assignments
+        td.drive-ass-column 
+            each ass in drivememoInfo.driveAssignments
+              if ass.assType == 'cardDrive'
+                p.cost-value #{ass.cost}€
+        td.drive-ass-column 
+            each ass in drivememoInfo.driveAssignments
+              if ass.assType == 'cashDrive'
+                p.cost-value #{ass.cost}€
+        td.drive-ass-column 
+            each ass in drivememoInfo.driveAssignments
+              if ass.assType == 'invoiceDrive'
+                p.cost-value #{ass.invoiceClient} / #{ass.invoiceTarget} / #{ass.cost}€
+      tr.drive-assignment-totals
+        td.total-column 
+          span#sum-span Yhteensä
+          span #{cardDriveSum}€
+        td.total-column #{cashDriveSum}€
+        td.total-column #{invoiceDriveSum}€
+      tr
+        td
+        td        
+        td#final-total-column 
+          span#final-total-span #{cardDriveSum + cashDriveSum + invoiceDriveSum}€
