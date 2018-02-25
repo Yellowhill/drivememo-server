@@ -8,23 +8,37 @@ import mongodbErrorHandler from 'mongoose-mongodb-errors';
 import passportLocalMongoose from 'passport-local-mongoose';
 
 const userSchema = new Schema({
-    email: {
-        type: String,
-        unique: true,
-        lowercase: true,
-        trim: true,
-        //validate: [validator.isEmail, 'Sähköpostiosoite on vääränlainen'],
-        validate: {validator: (value) => validator.isEmail(value), msg: 'Sähköpostiosoite on vääränlainen'},
-        required: 'Sähköpostiosoite puuttuu'
-    },
-    // name: {
-    //     type: String,
-    //     required: 'Nimi puuttuu',
-    //     trim: true
-    // }
+	email: {
+		type: String,
+		unique: true,
+		lowercase: true,
+		trim: true,
+		//validate: [validator.isEmail, 'Sähköpostiosoite on vääränlainen'],
+		validate: {
+			validator: (value) => validator.isEmail(value),
+			msg: 'Sähköpostiosoite on vääränlainen',
+		},
+		required: 'Sähköpostiosoite puuttuu',
+	},
+
+	name: {
+		type: String,
+		trim: true,
+	},
+
+	receiverEmail: {
+		type: String,
+		unique: true,
+		trim: true,
+		//validate: [validator.isEmail, 'Sähköpostiosoite on vääränlainen'],
+		validate: {
+			validator: (value) => validator.isEmail(value),
+			msg: 'Vastaanottajan sähköpostiosoite on vääränlainen',
+		},
+	},
 });
 
-userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 //userSchema.plugin(mongodbErrorHandler);
 
 export default mongoose.model('User', userSchema);

@@ -1,21 +1,11 @@
 import mail from '../handlers/mail.js';
 import moment from 'moment';
 
-const drivememoEmail = async drivememoInfo => {
+const drivememoEmail = async (drivememoInfo) => {
 	//console.log('calling drivermemoooEmail', drivememoInfo);
 	console.log('------:', drivememoInfo.driveAssignments);
-	// const {
-	//     driver,
-	//     driveStartDate,
-	//     driveEndDate,
-	//     roadometerStartValue,
-	//     roadometerEndValue,
-	//     workRelatedDriving,
-	//     workRelatedDrivingNoPay,
-	//     totalMileage
-	// } = req.body.drivememoInfo;
-	//const {drivememoInfo} = req.body;
-	const sumDrive = type =>
+
+	const sumDrive = (type) =>
 		drivememoInfo.driveAssignments.reduce((prev, curr) => {
 			if (curr.assType == type) {
 				return prev + parseInt(curr.cost);

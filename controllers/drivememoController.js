@@ -38,9 +38,10 @@ const addDrivememo = async (req, res, next) => {
 				targetMemo.save((err, updatedMemo) => {
 					if (err) {
 						console.log('Error in addDrivememo update ', err);
+					} else {
+						emailController.drivememoEmail(updatedMemo);
+						res.send(updatedMemo);
 					}
-					emailController.drivememoEmail(updatedMemo);
-					res.send(updatedMemo);
 				});
 			}
 		});

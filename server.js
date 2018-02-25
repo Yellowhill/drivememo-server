@@ -55,7 +55,8 @@ app.use(passport.session());
 //3. log the user in
 app.post(
 	'/register',
-	userController.validateRegister,
+	userController.validateEmail,
+	userController.validateRegisterPassword,
 	userController.register,
 	authController.login,
 	(req, res) => {
@@ -89,6 +90,12 @@ app.get(
 	'/checkdraft',
 	authController.isLoggedIn,
 	catchErrors(drivememoController.checkdraft)
+);
+
+app.post(
+	'/updateuserinfo',
+	userController.validateEmail,
+	catchErrors(userController.updateuserInfo)
 );
 
 //app.post('/drivememo', emailController.drivermemo);
